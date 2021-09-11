@@ -11,17 +11,27 @@ export const AuthACs = {
     login: (username: string, password: string) => async (dispatch: AppDispatch) => {
         try {
             dispatch(AuthACs.setIsLoading(true))
-            const mockUsers = await axios.get('./users.json')
-            console.log(mockUsers);
+            setTimeout(async () => {
+                const response = await axios.get<IUser[]>('./users.json')
+                const mockUsers = response.data.find(user => user.username === username && user.password === password)
+                if (mockUsers) {
+                    localStorage.setItem('auth', 'true')
+                    localStorage.setItem('username', mockUsers.username)
+                    dispatch(AuthACs.setIsAuth(true))
+                    dispatch(AuthACs.setUser(mockUsers))
+                } else {
+                    dispatch(AuthACs.setError('Неверный логин или пароль'))
+                }
+                dispatch(AuthACs.setIsLoading(false))
+            }, 1000)
         } catch (e) {
-dispatch(AuthACs.setError('Ошибка логина'))
+            dispatch(AuthACs.setError('Ошибка логина'))
         }
     },
     logout: () => async (dispatch: AppDispatch) => {
-        try {
-
-        } catch (e) {
-
-        }
-    },
+        localStorage.removeItem('auth')
+        localStorage.removeItem('username')
+        dispatch(AuthACs.setUser({} as IUser))
+        dispatch(AuthACs.setIsAuth(false))
+    }
 }

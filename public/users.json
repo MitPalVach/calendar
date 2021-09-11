@@ -1,7 +1,7 @@
 [
   {
     "username": "user",
-    "password": "321"
+    "password": "123"
   },
   {
     "username": "admin",
@@ -9,6 +9,6 @@
   },
   {
     "username": "mitpal",
-    "password": "qwe"
+    "password": "123"
   }
 ]
