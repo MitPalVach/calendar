@@ -18,8 +18,8 @@ export const AuthACs = {
                 if (mockUsers) {
                     localStorage.setItem('auth', 'true')
                     localStorage.setItem('username', mockUsers.username)
-                    dispatch(AuthACs.setIsAuth(true))
                     dispatch(AuthACs.setUser(mockUsers))
+                    dispatch(AuthACs.setIsAuth(true))
                 } else {
                     dispatch(AuthACs.setError('Неверный логин или пароль'))
                 }
